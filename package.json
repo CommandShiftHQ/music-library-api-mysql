@@ -8,8 +8,8 @@
     "sequelize": "^5.21.7"
   },
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "jest --runInBand"
+    "start": "nodemon -r dotenv/config index.js",
+    "test": "jest --runInBand --setupFiles ./jest-setup.js"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
