@@ -1,11 +1,18 @@
 const express = require('express');
+const { Artist } = require('./sequelize');
 
 const app = express();
 
-app.get('/', (req, res) => {
+app.use(express.json());
+
+app.get('/', (_, res) => {
   res.send({
     message: 'Hello world!',
   });
+});
+
+app.post('/artists', (req, res) => {
+  Artist.create(req.body).then(user => res.status(201).json(user));
 });
 
 module.exports = app;
