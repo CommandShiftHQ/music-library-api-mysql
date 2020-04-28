@@ -16,7 +16,7 @@ describe('/artists', () => {
   });
 
   describe('POST /artists', () => {
-    xit('creates a new artist in the database', done => {
+    it('creates a new artist in the database', done => {
       request(app)
         .post('/artists')
         .send({
@@ -26,8 +26,9 @@ describe('/artists', () => {
         .then(res => {
           expect(res.status).toBe(201);
           expect(res.body.name).toBe('Tame Impala');
-          Artist.findAll({}).then(artists => {
-            expect(artists.length).toBe(1);
+          Artist.findByPk(res.body.id).then(artist => {
+            expect(artist.dataValues.name).toBe('Tame Impala');
+            expect(artist.dataValues.genre).toBe('Rock');
             done();
           });
         });
@@ -97,7 +98,7 @@ describe('/artists', () => {
           .send({ genre: 'Psychedelic Rock' })
           .then(res => {
             expect(res.status).toBe(200);
-            Artist.find({ where: { id: artist.id } }, (_, updatedArtist) => {
+            Artist.findAll({ where: { id: artist.id } }, (_, updatedArtist) => {
               expect(updatedArtist.genre).toBe('Psychedelic Rock');
               done();
             });
@@ -123,7 +124,7 @@ describe('/artists', () => {
           .delete(`/artists/${artist.id}`)
           .then(res => {
             expect(res.status).toBe(204);
-            Artist.find({ where: { id: artist.id } }, (error, updatedArtist) => {
+            Artist.findAll({ where: { id: artist.id } }, (error, updatedArtist) => {
               expect(error).toBe(null);
               expect(updatedArtist).toBe(null);
               done();
