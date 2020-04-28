@@ -45,11 +45,10 @@ describe('/albums', () => {
         .then(res => {
           expect(res.status).toBe(201);
 
-          Album.find({ where: { id: artist.id } }, (err, album) => {
-            expect(err).toBe(null);
-            expect(album.name).toBe('InnerSpeaker');
-            expect(album.year).toBe(2010);
-            expect(album.artist).toEqual(artist.id);
+          Album.findByPk({ where: { id: artist.id } }, album => {
+            expect(album.dataValues.name).toBe('InnerSpeaker');
+            expect(album.dataValues.year).toBe(2010);
+            expect(album.dataValues.artist).toEqual(artist.id);
             done();
           });
         });
@@ -66,7 +65,7 @@ describe('/albums', () => {
           expect(res.status).toBe(404);
           expect(res.body.error).toBe('The artist could not be found.');
 
-          Album.find({}, (err, albums) => {
+          Album.findAll({}, (err, albums) => {
             expect(err).toBe(null);
             expect(albums.length).toBe(0);
             done();
