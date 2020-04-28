@@ -6,36 +6,25 @@ describe('/albums', () => {
   let artist;
 
   beforeEach(done => {
-    Artist.destroy({
-      where: {},
-    }).then(() => {
-      Artist.create(
-        {
-          name: 'Tame Impala',
-          genre: 'Rock',
-        },
-        (_, document) => {
-          artist = document;
-          done();
-        },
-      );
+    Artist.create({
+      name: 'Tame Impala',
+      genre: 'Rock',
+    }).then(document => {
+      artist = document;
+      done();
     });
   });
 
+  afterEach(done => {
+    Artist.destroy({ where: {} }).then(() => done());
+  });
+
   afterAll(done => {
-    Artist.destroy({
-      where: {},
-    })
-      .then(() =>
-        Album.destroy({
-          where: {},
-        }),
-      )
-      .then(() => Artist.sequelize.close().then(() => done()));
+    Album.sequelize.close().then(() => done());
   });
 
   describe('POST /artists/:artistId/albums', () => {
-    xit('creates a new album for a given artist', done => {
+    it('creates a new album for a given artist', done => {
       request(app)
         .post(`/artists/${artist.id}/albums`)
         .send({
@@ -45,10 +34,10 @@ describe('/albums', () => {
         .then(res => {
           expect(res.status).toBe(201);
 
-          Album.findByPk({ where: { id: artist.id } }, album => {
-            expect(album.dataValues.name).toBe('InnerSpeaker');
-            expect(album.dataValues.year).toBe(2010);
-            expect(album.dataValues.artist).toEqual(artist.id);
+          Album.findByPk(res.body.id, { raw: true }).then(album => {
+            expect(album.name).toBe('InnerSpeaker');
+            expect(album.year).toBe(2010);
+            expect(album.artistId).toEqual(artist.id);
             done();
           });
         });

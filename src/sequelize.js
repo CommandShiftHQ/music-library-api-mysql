@@ -15,6 +15,8 @@ const setupDatabase = () => {
   const Artist = ArtistModel(sequelize, Sequelize);
   const Album = AlbumModel(sequelize, Sequelize);
 
+  Album.belongsTo(Artist, { as: 'artist' });
+
   sequelize.sync();
   return {
     Artist,
