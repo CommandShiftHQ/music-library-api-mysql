@@ -117,14 +117,13 @@ describe('/artists', () => {
     });
 
     describe('DELETE /artists/:artistId', () => {
-      xit('deletes artist record by id', done => {
+      it('deletes artist record by id', done => {
         const artist = artists[0];
         request(app)
           .delete(`/artists/${artist.id}`)
           .then(res => {
             expect(res.status).toBe(204);
-            Artist.findAll({ where: { id: artist.id } }, (error, updatedArtist) => {
-              expect(error).toBe(null);
+            Artist.findByPk(artist.id, { raw: true }).then(updatedArtist => {
               expect(updatedArtist).toBe(null);
               done();
             });

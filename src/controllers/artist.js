@@ -29,3 +29,9 @@ exports.updateArtist = (req, res) => {
     }
   });
 };
+
+exports.deleteArtist = (req, res) => {
+  Artist.destroy({ where: { id: req.params.id } }).then(() => {
+    res.status(204).send();
+  });
+};
