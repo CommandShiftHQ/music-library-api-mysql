@@ -90,21 +90,21 @@ describe('/artists', () => {
     });
 
     describe('PATCH /artists/:artistId', () => {
-      xit('updates artist genre by id', done => {
+      it('updates artist genre by id', done => {
         const artist = artists[0];
         request(app)
           .patch(`/artists/${artist.id}`)
           .send({ genre: 'Psychedelic Rock' })
           .then(res => {
             expect(res.status).toBe(200);
-            Artist.findAll({ where: { id: artist.id } }, (_, updatedArtist) => {
+            Artist.findByPk(artist.id, { raw: true }).then(updatedArtist => {
               expect(updatedArtist.genre).toBe('Psychedelic Rock');
               done();
             });
           });
       });
 
-      xit('returns a 404 if the artist does not exist', done => {
+      it('returns a 404 if the artist does not exist', done => {
         request(app)
           .patch('/artists/12345')
           .send({ genre: 'Psychedelic Rock' })
