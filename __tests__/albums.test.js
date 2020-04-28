@@ -16,7 +16,7 @@ describe('/albums', () => {
   });
 
   afterEach(done => {
-    Artist.destroy({ where: {} }).then(() => done());
+    Artist.destroy({ where: {} }).then(() => Album.destroy({ where: {} }).then(() => done()));
   });
 
   afterAll(done => {
@@ -43,7 +43,7 @@ describe('/albums', () => {
         });
     });
 
-    xit('returns a 404 and does not create an album if the artist does not exist', done => {
+    it('returns a 404 and does not create an album if the artist does not exist', done => {
       request(app)
         .post('/artists/1234/albums')
         .send({
@@ -54,8 +54,7 @@ describe('/albums', () => {
           expect(res.status).toBe(404);
           expect(res.body.error).toBe('The artist could not be found.');
 
-          Album.findAll({}, (err, albums) => {
-            expect(err).toBe(null);
+          Album.findAll().then(albums => {
             expect(albums.length).toBe(0);
             done();
           });

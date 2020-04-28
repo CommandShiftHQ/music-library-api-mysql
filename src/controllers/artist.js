@@ -34,7 +34,13 @@ exports.updateArtist = (req, res) => {
 
 exports.deleteArtist = (req, res) => {
   const { id } = req.params;
-  Artist.destroy({ where: { id } }).then(() => {
-    res.status(204).send();
+  Artist.findByPk(id).then(artist => {
+    if (!artist) {
+      res.status(404).json({ error: 'The artist could not be found.' });
+    } else {
+      Artist.destroy({ where: { id } }).then(() => {
+        res.status(204).send();
+      });
+    }
   });
 };

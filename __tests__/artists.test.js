@@ -3,7 +3,7 @@ const { Artist } = require('../src/sequelize');
 const app = require('../src/app');
 
 describe('/artists', () => {
-  beforeEach(done => {
+  afterEach(done => {
     Artist.destroy({
       where: {},
     }).then(() => done());
@@ -130,7 +130,7 @@ describe('/artists', () => {
           });
       });
 
-      xit('returns a 404 if the artist does not exist', done => {
+      it('returns a 404 if the artist does not exist', done => {
         request(app)
           .delete('/artists/12345')
           .then(res => {
