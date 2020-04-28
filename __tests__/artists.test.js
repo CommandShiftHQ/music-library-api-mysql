@@ -65,8 +65,8 @@ describe('/artists', () => {
       });
     });
 
-    describe('GET /artist/:artistId', () => {
-      xit('gets artist record by id', done => {
+    describe('GET /artists/:artistId', () => {
+      it('gets artist record by id', done => {
         const artist = artists[0];
         request(app)
           .get(`/artists/${artist.id}`)
@@ -78,7 +78,7 @@ describe('/artists', () => {
           });
       });
 
-      xit('returns a 404 if the artist does not exist', done => {
+      it('returns a 404 if the artist does not exist', done => {
         request(app)
           .get('/artists/12345')
           .then(res => {

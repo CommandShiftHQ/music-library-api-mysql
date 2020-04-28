@@ -8,4 +8,6 @@ router
   .post(artistController.createArtist)
   .get(artistController.getArtists);
 
+router.route('/:id').get(artistController.getArtistById);
+
 module.exports = router;
