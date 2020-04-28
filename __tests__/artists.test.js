@@ -26,9 +26,9 @@ describe('/artists', () => {
         .then(res => {
           expect(res.status).toBe(201);
           expect(res.body.name).toBe('Tame Impala');
-          Artist.findByPk(res.body.id).then(artist => {
-            expect(artist.dataValues.name).toBe('Tame Impala');
-            expect(artist.dataValues.genre).toBe('Rock');
+          Artist.findByPk(res.body.id, { raw: true }).then(artist => {
+            expect(artist.name).toBe('Tame Impala');
+            expect(artist.genre).toBe('Rock');
             done();
           });
         });
@@ -55,9 +55,8 @@ describe('/artists', () => {
           .then(res => {
             expect(res.status).toBe(200);
             expect(res.body.length).toBe(3);
-
             res.body.forEach(artist => {
-              const expected = artists.find(a => a.id.toString() === artist.id);
+              const expected = artists.find(a => a.id === artist.id);
               expect(artist.name).toBe(expected.name);
               expect(artist.genre).toBe(expected.genre);
             });
