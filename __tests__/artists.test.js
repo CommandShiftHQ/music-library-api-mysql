@@ -49,7 +49,7 @@ describe('/artists', () => {
     });
 
     describe('GET /artists', () => {
-      xit('gets all artist records', done => {
+      it('gets all artist records', done => {
         request(app)
           .get('/artists')
           .then(res => {

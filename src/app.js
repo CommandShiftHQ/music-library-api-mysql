@@ -1,12 +1,11 @@
 const express = require('express');
-const { Artist } = require('./sequelize');
+
+const artistRouter = require('./routes/artist');
 
 const app = express();
 
 app.use(express.json());
 
-app.post('/artists', (req, res) => {
-  Artist.create(req.body).then(user => res.status(201).json(user));
-});
+app.use('/artists', artistRouter);
 
 module.exports = app;
