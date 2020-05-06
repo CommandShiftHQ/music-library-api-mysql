@@ -10,7 +10,9 @@
   },
   "scripts": {
     "start": "nodemon -r dotenv/config index.js",
-    "test": "jest --runInBand --setupFiles ./jest-setup.js"
+    "pretest": "node -r dotenv/config scripts/create-database.js",
+    "test": "jest --runInBand --setupFiles ./jest-setup.js",
+    "posttest": "node -r dotenv/config scripts/drop-database.js"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",

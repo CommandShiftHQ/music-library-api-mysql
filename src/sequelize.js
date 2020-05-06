@@ -13,7 +13,7 @@ const setupDatabase = () => {
 
   const Artist = ArtistModel(sequelize, Sequelize);
 
-  sequelize.sync();
+  sequelize.sync({ alter: true });
   return {
     Artist,
   };
