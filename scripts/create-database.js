@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const path = require('path');
 
 require('dotenv').config({
-  path: path.join(__dirname, '../.env'),
+  path: path.join(__dirname, '../.env.test'),
 });
 
 const { DB_PASSWORD, DB_NAME, DB_USER, DB_HOST, DB_PORT } = process.env;
