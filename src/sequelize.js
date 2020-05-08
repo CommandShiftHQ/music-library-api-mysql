@@ -17,7 +17,7 @@ const setupDatabase = () => {
 
   Album.belongsTo(Artist, { as: 'artist' });
 
-  // sequelize.sync({ alter: true });
+  sequelize.sync({ alter: true });
   return {
     Artist,
     Album,
