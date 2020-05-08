@@ -9,19 +9,13 @@
     "sequelize": "^5.21.7"
   },
   "scripts": {
+    "prestart": "node scripts/create-database.js",
     "start": "nodemon -r dotenv/config index.js",
-    "pretest": "node -r dotenv/config scripts/create-database.js",
+    "pretest": "node scripts/create-database.js test",
     "test": "jest --runInBand --setupFiles ./jest-setup.js",
-    "posttest": "node -r dotenv/config scripts/drop-database.js"
+    "posttest": "node scripts/drop-database.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-export-default-from": "^7.2.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
-    "@babel/preset-env": "^7.6.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
