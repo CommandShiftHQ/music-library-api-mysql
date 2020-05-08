@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const request = require('supertest');
 const { Artist } = require('../src/sequelize');
 const app = require('../src/app');
