@@ -5,6 +5,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mocha": "^7.1.2",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.7"
   },
@@ -12,7 +13,7 @@
     "prestart": "node scripts/create-database.js",
     "start": "nodemon -r dotenv/config index.js",
     "pretest": "node scripts/create-database.js test",
-    "test": "mocha tests/**/*.test.js --opts .mocha.opts",
+    "test": "NODE_ENV=test nyc --reporter=lcov mocha __tests__/**/*.js --exit --recursive --timeout 60000 --file ./test-setup.js",
     "posttest": "node scripts/drop-database.js"
   },
   "devDependencies": {
@@ -23,9 +24,9 @@
     "eslint-config-prettier": "^6.6.0",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "jest": "^25.4.0",
     "mocha": "^7.1.2",
     "nodemon": "^2.0.3",
+    "nyc": "^15.0.1",
     "prettier": "^2.0.5",
     "sequelize-cli": "^5.5.1",
     "supertest": "^4.0.2"
