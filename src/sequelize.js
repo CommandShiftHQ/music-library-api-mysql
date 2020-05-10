@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
 const ArtistModel = require('./models/artist');
 const AlbumModel = require('./models/album');
+<<<<<<< HEAD
 const SongModel = require('./models/song');
+=======
+>>>>>>> parent of c5bb7dc... Merge branch 'master' into dev
 
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
