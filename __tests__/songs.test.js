@@ -61,6 +61,7 @@ describe('/songs', () => {
           expect(res.body.id).toBe(songId);
           expect(res.body.name).toBe('Solitude Is Bliss');
           expect(res.body.artistId).toBe(artist.id);
+          expect(res.body.albumId).toBe(album.id);
           done();
         });
     });

@@ -20,6 +20,7 @@ const setupDatabase = () => {
   Album.belongsTo(Artist, { as: 'artist' });
 
   Song.belongsTo(Artist, { as: 'artist' });
+  Song.belongsTo(Album, { as: 'album' });
 
   sequelize.sync({ alter: true });
   return {
