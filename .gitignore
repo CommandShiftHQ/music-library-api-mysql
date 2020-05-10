@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.nyc_output
 /.pnp
 .pnp.js
 

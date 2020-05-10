@@ -1,15 +1,32 @@
 {
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
-  "plugins": ["import", "prettier"],
-  "env": {
-    "jest": true
-  },
-  "rules": {
-    "no-unused-vars": [
-      "error",
-      {
-        "argsIgnorePattern": "next"
+  "extends": "mcr-codes",
+  "overrides": [
+    {
+      "files": [
+        "tests/**/*.test.js",
+        "mocha.config.js"
+      ],
+      "env": {
+        "mocha": true
       }
-    ]
-  }
+    },
+    {
+      "files": [
+        "tests/**/*.test.js",
+      ],
+      "globals": {
+        "server": true,
+        "chai": true,
+        "expect": true
+      }
+    },
+    {
+      "files": [
+        "mocha.config.js"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": 0
+      }
+    }
+  ]
 }
