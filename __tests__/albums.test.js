@@ -40,7 +40,7 @@ describe('/albums', () => {
   });
 
   describe('POST /artists/:artistId/albums', () => {
-    it('creates a new album for a given artist', (done) => {
+    xit('creates a new album for a given artist', (done) => {
       request(app)
         .post(`/artists/${artist.id}/albums`)
         .send({
@@ -59,7 +59,7 @@ describe('/albums', () => {
         });
     });
 
-    it('returns a 404 and does not create an album if the artist does not exist', (done) => {
+    xit('returns a 404 and does not create an album if the artist does not exist', (done) => {
       request(app)
         .post('/artists/1234/albums')
         .send({
