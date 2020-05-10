@@ -29,14 +29,6 @@ describe('/albums', () => {
     }
   });
 
-  after(async () => {
-    try {
-      // await Album.sequelize.close();
-    } catch (err) {
-      console.log(err);
-    }
-  });
-
   describe('POST /artists/:artistId/albums', () => {
     it('creates a new album for a given artist', (done) => {
       request(app)

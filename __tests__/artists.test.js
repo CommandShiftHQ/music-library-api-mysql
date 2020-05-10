@@ -21,14 +21,6 @@ describe('/artists', () => {
     }
   });
 
-  after(async () => {
-    try {
-      // await Artist.sequelize.close();
-    } catch (err) {
-      console.log(err);
-    }
-  });
-
   describe('POST /artists', () => {
     it('creates a new artist in the database', async () => {
       const response = await request(app).post('/artists').send({
