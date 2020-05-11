@@ -4,7 +4,7 @@ This repository contains the integration test suite for Music Library API challe
 
 ### Install
 - Fork this repository
-- `git clone git@github.com:<your-github-username>/music-library-api.git`
+- `git clone git@github.com:<your-github-username>/music-library-api-mysql.git`
 - `npm install`
 
 ### Running the Tests
