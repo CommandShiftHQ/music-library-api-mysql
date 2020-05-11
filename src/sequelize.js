@@ -14,14 +14,14 @@ const setupDatabase = () => {
   });
 
   const Artist = ArtistModel(sequelize, Sequelize);
-  const Album = AlbumModel(sequelize, Sequelize);
-  const Song = SongModel(sequelize, Sequelize);
+ // const Album = AlbumModel(sequelize, Sequelize);
+ // const Song = SongModel(sequelize, Sequelize);
 
   sequelize.sync({ alter: true });
   return {
     Artist,
-    Album,
-    Song,
+  //  Album,
+  //  Song,
   };
 };
 
