@@ -12,7 +12,7 @@ docker run -d -p 3306:3306 --name music_library_mysql -e MYSQL_ROOT_PASSWORD=<PA
 Once this is running, you will need to create the `music_library` database:
 
 ```
-docker exec -it music_library_mysql bash
+docker exec -it music-library-api-db bash
 ```
 
 From inside the container:
