@@ -1,34 +1,24 @@
 /* eslint-disable no-console */
+const { expect } = require('chai');
 const request = require('supertest');
 const { Artist } = require('../src/sequelize');
 const app = require('../src/app');
 
 describe('/artists', () => {
-  beforeAll(async (done) => {
+  before(async () => {
     try {
       await Artist.sequelize.sync();
     } catch (err) {
       console.log(err);
     }
-    done();
   });
 
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     try {
       await Artist.destroy({ where: {} });
     } catch (err) {
       console.log(err);
     }
-    done();
-  });
-
-  afterAll(async (done) => {
-    try {
-      await Artist.sequelize.close();
-    } catch (err) {
-      console.log(err);
-    }
-    done();
   });
 
   describe('POST /artists', () => {
@@ -38,12 +28,12 @@ describe('/artists', () => {
         genre: 'Rock',
       });
 
-      await expect(response.status).toBe(201);
-      await expect(response.body.name).toBe('Tame Impala');
+      await expect(response.status).to.equal(201);
+      await expect(response.body.name).to.equal('Tame Impala');
 
       const insertedArtistRecords = await Artist.findByPk(response.body.id, { raw: true });
-      await expect(insertedArtistRecords.name).toBe('Tame Impala');
-      await expect(insertedArtistRecords.genre).toBe('Rock');
+      await expect(insertedArtistRecords.name).to.equal('Tame Impala');
+      await expect(insertedArtistRecords.genre).to.equal('Rock');
     });
   });
 
@@ -65,12 +55,12 @@ describe('/artists', () => {
         request(app)
           .get('/artists')
           .then((res) => {
-            expect(res.status).toBe(200);
-            expect(res.body.length).toBe(3);
+            expect(res.status).to.equal(200);
+            expect(res.body.length).to.equal(3);
             res.body.forEach((artist) => {
               const expected = artists.find((a) => a.id === artist.id);
-              expect(artist.name).toBe(expected.name);
-              expect(artist.genre).toBe(expected.genre);
+              expect(artist.name).to.equal(expected.name);
+              expect(artist.genre).to.equal(expected.genre);
             });
             done();
           });
@@ -83,9 +73,9 @@ describe('/artists', () => {
         request(app)
           .get(`/artists/${artist.id}`)
           .then((res) => {
-            expect(res.status).toBe(200);
-            expect(res.body.name).toBe(artist.name);
-            expect(res.body.genre).toBe(artist.genre);
+            expect(res.status).to.equal(200);
+            expect(res.body.name).to.equal(artist.name);
+            expect(res.body.genre).to.equal(artist.genre);
             done();
           });
       });
@@ -94,8 +84,8 @@ describe('/artists', () => {
         request(app)
           .get('/artists/12345')
           .then((res) => {
-            expect(res.status).toBe(404);
-            expect(res.body.error).toBe('The artist could not be found.');
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The artist could not be found.');
             done();
           });
       });
@@ -108,9 +98,9 @@ describe('/artists', () => {
           .patch(`/artists/${artist.id}`)
           .send({ genre: 'Psychedelic Rock' })
           .then((res) => {
-            expect(res.status).toBe(200);
+            expect(res.status).to.equal(200);
             Artist.findByPk(artist.id, { raw: true }).then((updatedArtist) => {
-              expect(updatedArtist.genre).toBe('Psychedelic Rock');
+              expect(updatedArtist.genre).to.equal('Psychedelic Rock');
               done();
             });
           });
@@ -121,8 +111,8 @@ describe('/artists', () => {
           .patch('/artists/12345')
           .send({ genre: 'Psychedelic Rock' })
           .then((res) => {
-            expect(res.status).toBe(404);
-            expect(res.body.error).toBe('The artist could not be found.');
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The artist could not be found.');
             done();
           });
       });
@@ -134,9 +124,9 @@ describe('/artists', () => {
         request(app)
           .delete(`/artists/${artist.id}`)
           .then((res) => {
-            expect(res.status).toBe(204);
+            expect(res.status).to.equal(204);
             Artist.findByPk(artist.id, { raw: true }).then((updatedArtist) => {
-              expect(updatedArtist).toBe(null);
+              expect(updatedArtist).to.equal(null);
               done();
             });
           });
@@ -146,8 +136,8 @@ describe('/artists', () => {
         request(app)
           .delete('/artists/12345')
           .then((res) => {
-            expect(res.status).toBe(404);
-            expect(res.body.error).toBe('The artist could not be found.');
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The artist could not be found.');
             done();
           });
       });

@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+const { expect } = require('chai');
 const request = require('supertest');
 const app = require('../src/app');
 const { Artist, Album } = require('../src/sequelize');
@@ -6,17 +7,16 @@ const { Artist, Album } = require('../src/sequelize');
 describe('/albums', () => {
   let artist;
 
-  beforeAll(async (done) => {
+  before(async () => {
     try {
       await Artist.sequelize.sync();
       await Album.sequelize.sync();
     } catch (err) {
       console.log(err);
     }
-    done();
   });
 
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     try {
       await Artist.destroy({ where: {} });
       await Album.destroy({ where: {} });
@@ -27,16 +27,6 @@ describe('/albums', () => {
     } catch (err) {
       console.log(err);
     }
-    done();
-  });
-
-  afterAll(async (done) => {
-    try {
-      await Album.sequelize.close();
-    } catch (err) {
-      console.log(err);
-    }
-    done();
   });
 
   describe('POST /artists/:artistId/albums', () => {
@@ -48,12 +38,12 @@ describe('/albums', () => {
           year: 2010,
         })
         .then((res) => {
-          expect(res.status).toBe(201);
+          expect(res.status).to.equal(201);
 
           Album.findByPk(res.body.id, { raw: true }).then((album) => {
-            expect(album.name).toBe('InnerSpeaker');
-            expect(album.year).toBe(2010);
-            expect(album.artistId).toEqual(artist.id);
+            expect(album.name).to.equal('InnerSpeaker');
+            expect(album.year).to.equal(2010);
+            expect(album.artistId).to.equal(artist.id);
             done();
           });
         });
@@ -67,11 +57,11 @@ describe('/albums', () => {
           year: 2010,
         })
         .then((res) => {
-          expect(res.status).toBe(404);
-          expect(res.body.error).toBe('The artist could not be found.');
+          expect(res.status).to.equal(404);
+          expect(res.body.error).to.equal('The artist could not be found.');
 
           Album.findAll().then((albums) => {
-            expect(albums.length).toBe(0);
+            expect(albums.length).to.equal(0);
             done();
           });
         });

@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+const { expect } = require('chai');
 const request = require('supertest');
 const app = require('../src/app');
 const { Artist, Album, Song } = require('../src/sequelize');
@@ -7,7 +8,7 @@ describe('/songs', () => {
   let artist;
   let album;
 
-  beforeAll(async (done) => {
+  before(async () => {
     try {
       await Artist.sequelize.sync();
       await Album.sequelize.sync();
@@ -15,10 +16,9 @@ describe('/songs', () => {
     } catch (err) {
       console.log(err);
     }
-    done();
   });
 
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     try {
       await Artist.destroy({ where: {} });
       await Album.destroy({ where: {} });
@@ -35,16 +35,6 @@ describe('/songs', () => {
     } catch (err) {
       console.log(err);
     }
-    done();
-  });
-
-  afterAll(async (done) => {
-    try {
-      await Artist.sequelize.close();
-    } catch (err) {
-      console.log(err);
-    }
-    done();
   });
 
   describe('POST /album/:albumId/song', () => {
@@ -56,12 +46,12 @@ describe('/songs', () => {
           name: 'Solitude Is Bliss',
         })
         .then((res) => {
-          expect(res.status).toBe(201);
+          expect(res.status).to.equal(201);
           const songId = res.body.id;
-          expect(res.body.id).toBe(songId);
-          expect(res.body.name).toBe('Solitude Is Bliss');
-          expect(res.body.artistId).toBe(artist.id);
-          expect(res.body.albumId).toBe(album.id);
+          expect(res.body.id).to.equal(songId);
+          expect(res.body.name).to.equal('Solitude Is Bliss');
+          expect(res.body.artistId).to.equal(artist.id);
+          expect(res.body.albumId).to.equal(album.id);
           done();
         });
     });
