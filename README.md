@@ -1,4 +1,4 @@
-# WIP: MySQL Music Library API
+# MySQL Music Library API
 
 
 ## Setting up the database
@@ -18,7 +18,7 @@ docker exec -it music_library_mysql bash
 From inside the container:
 
 ```
-mysqy -uroot -p
+mysql -uroot -p
 ```
 You will then be prompted for your password. After you have authenticated, you can create the database with:
 
