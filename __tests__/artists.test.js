@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const { expect } = require('chai');
 const request = require('supertest');
-const { Artist } = require('../src/sequelize');
+const { Artist } = require('../src/models');
 const app = require('../src/app');
 
 describe('/artists', () => {
