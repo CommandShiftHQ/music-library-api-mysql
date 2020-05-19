@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const ArtistModel = require('./models/artist');
-const AlbumModel = require('./models/album');
-const SongModel = require('./models/song');
+const ArtistModel = require('./artist');
+const AlbumModel = require('./album');
+const SongModel = require('./song');
 
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 

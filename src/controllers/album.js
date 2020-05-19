@@ -1,5 +1,4 @@
-const { Album } = require('../sequelize');
-const { Artist } = require('../sequelize');
+const { Album, Artist } = require('../models');
 
 exports.createAlbum = (req, res) => {
   const { id } = req.params;

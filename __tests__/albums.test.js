@@ -2,7 +2,7 @@
 const { expect } = require('chai');
 const request = require('supertest');
 const app = require('../src/app');
-const { Artist, Album } = require('../src/sequelize');
+const { Artist, Album } = require('../src/models');
 
 describe('/albums', () => {
   let artist;
