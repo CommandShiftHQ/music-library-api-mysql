@@ -1,18 +1,4 @@
 {
-  "editor.formatOnSave": true,
-  "[javascript]": {
-    "editor.formatOnSave": false
-  },
-  "[javascriptreact]": {
-    "editor.formatOnSave": false
-  },
-  "prettier.disableLanguages": [
-    "javascript",
-    "javascriptreact"
-  ],
-  "editor.insertSpaces": true,
-  "editor.tabSize": 2,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
+  "git.ignoreLimitWarning": true,
+  "editor.formatOnSave": true
 }
