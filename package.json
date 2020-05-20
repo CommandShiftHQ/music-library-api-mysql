@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mocha": "^7.1.2",
     "mysql2": "^2.1.0",
@@ -13,12 +12,12 @@
     "prestart": "node scripts/create-database.js",
     "start": "nodemon -r dotenv/config index.js",
     "pretest": "node scripts/create-database.js test",
-    "test": "NODE_ENV=test nyc --reporter=lcov mocha __tests__/**/*.js --exit --recursive --timeout 60000 --file ./test-setup.js",
+    "test": "NODE_ENV=test mocha tests/**/*.js --exit --recursive --timeout 60000 --file ./tests/test-setup.js",
     "posttest": "node scripts/drop-database.js"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.6.0",
@@ -26,9 +25,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "mocha": "^7.1.2",
     "nodemon": "^2.0.3",
-    "nyc": "^15.0.1",
     "prettier": "^2.0.5",
-    "sequelize-cli": "^5.5.1",
     "supertest": "^4.0.2"
   }
 }
