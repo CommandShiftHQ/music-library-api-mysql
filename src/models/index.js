@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize');
 const ArtistModel = require('./artist');
-const AlbumModel = require('./album');
-const SongModel = require('./song');
 
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
@@ -17,7 +15,7 @@ const setupDatabase = () => {
 
   connection.sync({ alter: true });
   return {
-    Artist
+    Artist,
   };
 };
 
