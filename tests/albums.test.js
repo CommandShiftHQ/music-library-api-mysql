@@ -38,7 +38,6 @@ describe('/albums', () => {
           year: 2010,
         })
         .then((res) => {
-          console.log(res.body)
           expect(res.status).to.equal(201);
           return Album.findByPk(res.body.id, { raw: true });
         })
@@ -48,10 +47,10 @@ describe('/albums', () => {
           expect(album.artistId).to.equal(artist.id);
           done();
         })
-        .catch((error) => done(error));;
+        .catch((error) => done(error));
     });
 
-    xit('returns a 404 and does not create an album if the artist does not exist', (done) => {
+    it('returns a 404 and does not create an album if the artist does not exist', (done) => {
       request(app)
         .post('/artists/1234/albums')
         .send({
@@ -60,7 +59,7 @@ describe('/albums', () => {
         })
         .then((res) => {
           expect(res.status).to.equal(404);
-          expect(res.body.error).to.equal('The artist could not be found.');
+          expect(res.body.error).to.equal('the artist could not be found');
 
           return Album.findAll();
         })

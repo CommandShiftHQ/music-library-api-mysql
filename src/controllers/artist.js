@@ -7,13 +7,13 @@ exports.create = (req, res) => {
 };
 
 exports.readAll = (req, res) => {
-  Artist.findAll(req.query)
+  Artist.findAll({ include: 'albums', where: req.query })
     .then((artistDocuments) => res.status(200).json(artistDocuments))
     .catch((error) => res.status(500).json({ error: error.errors.map((e) => e.message) }));
 };
 
 exports.readById = (req, res) => {
-  Artist.findByPk(req.params.artistId)
+  Artist.findByPk(req.params.artistId, { include: 'albums' })
     .then(artistDocument => {
       if (artistDocument) {
         res.status(200).json(artistDocument);
