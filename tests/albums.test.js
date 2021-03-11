@@ -7,26 +7,26 @@ const { Artist, Album } = require('../src/models');
 describe('/albums', () => {
   let artist;
 
-  before(async () => {
-    try {
-      await Artist.sequelize.sync();
-      await Album.sequelize.sync();
-    } catch (err) {
-      console.log(err);
-    }
+  before((done) => {
+    Promise.all([
+      Artist.sequelize.sync(),
+      Album.sequelize.sync()
+    ])
+      .then(() => done())
+      .catch((error) => done(error));
   });
 
-  beforeEach(async () => {
-    try {
-      await Artist.destroy({ where: {} });
-      await Album.destroy({ where: {} });
-      artist = await Artist.create({
-        name: 'Tame Impala',
-        genre: 'Rock',
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  beforeEach((done) => {
+    Promise.all([
+      Artist.destroy({ where: {} }),
+      Album.destroy({ where: {} }),
+    ])
+      .then(() => Artist.create({ name: "Tame Impala", genre: "Rock" }))
+      .then((artistDocument) => {
+        artist = artistDocument;
+        done();
+      })
+      .catch((error) => done(error));
   });
 
   describe('POST /artists/:artistId/albums', () => {
@@ -40,12 +40,13 @@ describe('/albums', () => {
         .then((res) => {
           expect(res.status).to.equal(201);
 
-          Album.findByPk(res.body.id, { raw: true }).then((album) => {
-            expect(album.name).to.equal('InnerSpeaker');
-            expect(album.year).to.equal(2010);
-            expect(album.artistId).to.equal(artist.id);
-            done();
-          });
+          return Album.findByPk(res.body.id, { raw: true });
+        })
+        .then((album) => {
+          expect(album.name).to.equal('InnerSpeaker');
+          expect(album.year).to.equal(2010);
+          expect(album.artistId).to.equal(artist.id);
+          done();
         });
     });
 
@@ -60,10 +61,11 @@ describe('/albums', () => {
           expect(res.status).to.equal(404);
           expect(res.body.error).to.equal('The artist could not be found.');
 
-          Album.findAll().then((albums) => {
-            expect(albums.length).to.equal(0);
-            done();
-          });
+          return Album.findAll();
+        })
+        .then((albums) => {
+          expect(albums.length).to.equal(0);
+          done();
         });
     });
   });
