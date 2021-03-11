@@ -14,10 +14,15 @@ const setupDatabase = () => {
   });
 
   const Artist = ArtistModel(connection, Sequelize);
+  const Album = AlbumModel(connection, Sequelize);
+  const Song = SongModel(connection, Sequelize)
+
 
   connection.sync({ alter: true });
   return {
-    Artist
+    Artist,
+    Album,
+    Song
   };
 };
 

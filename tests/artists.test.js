@@ -56,7 +56,7 @@ describe('/artists', () => {
       });
 
       describe('GET /artists', () => {
-        xit('gets all artist records', (done) => {
+        it('gets all artist records', (done) => {
           request(app)
             .get('/artists')
             .then((res) => {
@@ -74,7 +74,7 @@ describe('/artists', () => {
       });
 
       describe('GET /artists/:artistId', () => {
-        xit('gets artist record by id', (done) => {
+        it('gets artist record by id', (done) => {
           const artist = artists[0];
           request(app)
             .get(`/artists/${artist.id}`)
@@ -87,12 +87,12 @@ describe('/artists', () => {
             .catch((error) => done(error));
         });
 
-        xit('returns a 404 if the artist does not exist', (done) => {
+        it('returns a 404 if the artist does not exist', (done) => {
           request(app)
             .get('/artists/12345')
             .then((res) => {
               expect(res.status).to.equal(404);
-              expect(res.body.error).to.equal('The artist could not be found.');
+              expect(res.body.error).to.equal('the artist could not be found');
               done();
             })
             .catch((error) => done(error));
@@ -100,13 +100,13 @@ describe('/artists', () => {
       });
 
       describe('PATCH /artists/:artistId', () => {
-        xit('updates artist genre by id', (done) => {
+        it('updates artist genre by id', (done) => {
           const artist = artists[0];
           request(app)
             .patch(`/artists/${artist.id}`)
             .send({ genre: 'Psychedelic Rock' })
             .then((res) => {
-              expect(res.status).to.equal(200);
+              expect(res.status).to.equal(204);
 
               return Artist.findByPk(artist.id, { raw: true });
             })
@@ -117,13 +117,13 @@ describe('/artists', () => {
             .catch((error) => done(error));
         });
 
-        xit('returns a 404 if the artist does not exist', (done) => {
+        it('returns a 404 if the artist does not exist', (done) => {
           request(app)
             .patch('/artists/12345')
             .send({ genre: 'Psychedelic Rock' })
             .then((res) => {
               expect(res.status).to.equal(404);
-              expect(res.body.error).to.equal('The artist could not be found.');
+              expect(res.body.error).to.equal('the artist could not be found');
               done();
             })
             .catch((error) => done(error));
@@ -131,7 +131,7 @@ describe('/artists', () => {
       });
 
       describe('DELETE /artists/:artistId', () => {
-        xit('deletes artist record by id', (done) => {
+        it('deletes artist record by id', (done) => {
           const artist = artists[0];
           request(app)
             .delete(`/artists/${artist.id}`)
@@ -139,19 +139,19 @@ describe('/artists', () => {
               expect(res.status).to.equal(204);
               return Artist.findByPk(artist.id, { raw: true });
             })
-            .then((updatedArtist) => {
-              expect(updatedArtist).to.equal(null);
+            .then((artistDocument) => {
+              expect(artistDocument).to.equal(null);
               done();
             })
             .catch((error) => done(error));
         });
 
-        xit('returns a 404 if the artist does not exist', (done) => {
+        it('returns a 404 if the artist does not exist', (done) => {
           request(app)
             .delete('/artists/12345')
             .then((res) => {
               expect(res.status).to.equal(404);
-              expect(res.body.error).to.equal('The artist could not be found.');
+              expect(res.body.error).to.equal('the artist could not be found');
               done();
             })
             .catch((error) => done(error));
