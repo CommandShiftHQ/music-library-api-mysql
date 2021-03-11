@@ -30,7 +30,7 @@ describe('/albums', () => {
   });
 
   describe('POST /artists/:artistId/albums', () => {
-    xit('creates a new album for a given artist', (done) => {
+    it('creates a new album for a given artist', (done) => {
       request(app)
         .post(`/artists/${artist.id}/albums`)
         .send({
@@ -38,8 +38,8 @@ describe('/albums', () => {
           year: 2010,
         })
         .then((res) => {
+          console.log(res.body)
           expect(res.status).to.equal(201);
-
           return Album.findByPk(res.body.id, { raw: true });
         })
         .then((album) => {
@@ -47,7 +47,8 @@ describe('/albums', () => {
           expect(album.year).to.equal(2010);
           expect(album.artistId).to.equal(artist.id);
           done();
-        });
+        })
+        .catch((error) => done(error));;
     });
 
     xit('returns a 404 and does not create an album if the artist does not exist', (done) => {
@@ -66,7 +67,8 @@ describe('/albums', () => {
         .then((albums) => {
           expect(albums.length).to.equal(0);
           done();
-        });
+        })
+        .catch((error) => done(error));
     });
   });
 });
