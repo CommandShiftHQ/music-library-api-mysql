@@ -9,9 +9,9 @@ describe('/songs', () => {
 
   before((done) => {
     Promise.all([
-      Artist.sequelize.sync(),
+      Song.sequelize.sync(),
       Album.sequelize.sync(),
-      Song.sequelize.sync()
+      Artist.sequelize.sync()
     ])
       .then(() => done())
       .catch((error) => done(error));
@@ -36,20 +36,21 @@ describe('/songs', () => {
   });
 
   describe('POST /album/:albumId/song', () => {
-    xit('creates a new song under an album', (done) => {
+    it('creates a new song under an album', (done) => {
       request(app)
-        .post(`/album/${album.id}/song`)
+        .post(`/albums/${album.id}/songs`)
         .send({
-          artist: artist.id,
+          artistId: artist.id,
           name: 'Solitude Is Bliss',
         })
         .then((res) => {
           expect(res.status).to.equal(201);
           expect(res.body.name).to.equal('Solitude Is Bliss');
-          expect(res.body.artistId).to.equal(artist.id);
           expect(res.body.albumId).to.equal(album.id);
+          expect(res.body.artistId).to.equal(artist.id);
           done();
-        });
+        })
+        .catch((error) => done(error));
     });
   });
 });

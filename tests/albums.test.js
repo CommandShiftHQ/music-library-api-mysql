@@ -18,8 +18,8 @@ describe('/albums', () => {
 
   beforeEach((done) => {
     Promise.all([
-      Artist.destroy({ where: {} }),
       Album.destroy({ where: {} }),
+      Artist.destroy({ where: {} })
     ])
       .then(() => Artist.create({ name: "Tame Impala", genre: "Rock" }))
       .then((artistDocument) => {
