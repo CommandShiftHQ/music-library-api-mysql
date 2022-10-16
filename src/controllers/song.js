@@ -5,8 +5,6 @@ exports.create = (req, res) => {
   const songData = req.body;
   songData.albumId = parseInt(req.params.albumId);
 
-  console.log(req.body)
-
   Song.create(songData)
     .then((songDocument) => res.status(201).json(songDocument))
     .catch((error) => {
