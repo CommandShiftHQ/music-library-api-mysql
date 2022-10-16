@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: music-library-demo
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm ci
+    startCommand: node index.js
+    envVars:
+      - key: DB_NAME
+        fromDatabase:
+          name: music-library-demo-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: music-library-demo-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: music-library-demo-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: music-library-demo-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: music-library-demo-db
+          property: port
+
+databases:
+  - name: music-library-demo-db
+    plan: free
+    region: frankfurt
+    databaseName: music-library-demo
+    ipAllowList: [] 
